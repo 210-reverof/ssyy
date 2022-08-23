@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "916070727524",
+    "project_id": "ssyy-bedb7",
+    "storage_bucket": "ssyy-bedb7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:916070727524:android:7c57b316c3d7fffc138471",
+        "android_client_info": {
+          "package_name": "com.example.ssyy"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "916070727524-qtkh75uqaof9jbp3hj7icpi5t0mhg0s8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBsCHh3D2wl467r2ItZ4PpJ5-yjdC2w9xQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "916070727524-qtkh75uqaof9jbp3hj7icpi5t0mhg0s8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
