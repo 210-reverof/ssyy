@@ -14,25 +14,36 @@ class _OutputPageState extends State<OutputPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'ssyy',
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            // 리스트뷰
-            Container(
-              color: Colors.white,
-              width: 500,
-              height: 550,
-              margin: const EdgeInsets.all(20),
-              child: _buildBody(context),
-            )
-          ],
+      body: Container(
+        color: Colors.white,
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              SizedBox(
+                height: MediaQuery.of(context).size.height * 0.03,
+              ),
+              Container(
+                  width: MediaQuery.of(context).size.width * 0.8,
+                  height: MediaQuery.of(context).size.height * 0.1,
+                  decoration: BoxDecoration(
+                      image: DecorationImage(
+                          image: AssetImage('asset/output_banner.png'),
+                          fit: BoxFit.fill))),
+              SizedBox(
+                height: MediaQuery.of(context).size.height * 0.03,
+              ),
+
+              // 리스트뷰
+              Container(
+                color: Colors.white,
+                width: MediaQuery.of(context).size.width * 0.8,
+                height: MediaQuery.of(context).size.height * 0.7,
+                margin: const EdgeInsets.all(20),
+                child: _buildBody(context),
+              )
+            ],
+          ),
         ),
       ),
     );
@@ -40,51 +51,67 @@ class _OutputPageState extends State<OutputPage> {
 
   Widget _buildBody(BuildContext context) {
     return StreamBuilder<QuerySnapshot>(
-        //동적 데이터 활용을 위해 스트림 형성
         stream: FirebaseFirestore.instance.collection('messeges').snapshots(),
         builder: (context, snapshot) {
           if (!snapshot.hasData) {
             return LinearProgressIndicator();
           }
 
-          return _buildList(context, snapshot.data!.docs); //리스트뷰 생성 함수(생성자) 호출
+          return _buildList(context, snapshot.data!.docs);
         });
   }
 
-  //쿼리문 스냅샷 문서를 인자로 갖고 리스트뷰를 반환하는 함수
   Widget _buildList(BuildContext context, List<DocumentSnapshot> snapshot) {
     return ListView(
       scrollDirection: Axis.vertical,
       shrinkWrap: true,
-      children: snapshot
-          .map((data) => _buildListItem(context, data))
-          .toList(), //문서마다 리스트뷰_타일 생성 함수(생성자) 호출
+      children: snapshot.map((data) => _buildListItem(context, data)).toList(),
     );
   }
 
-  //각 문서의 데이터를 인자로 갖고 리스트뷰_타일(각 사각항목)을 반환하는 함수
   Widget _buildListItem(BuildContext context, DocumentSnapshot data) {
     final currTrash = Msg.fromDocumnet(data);
     DateTime currTime = currTrash.date.toDate();
     String timeString = DateFormat('MM-dd kk:mm').format(currTime);
+    double tileWidth = MediaQuery.of(context).size.width * 0.8;
+    double tileHeight = MediaQuery.of(context).size.height * 0.08;
 
-    // 리스트뷰 한 칸 꾸미기
-    return Container(
-      width: 300,
-      height: 100,
-      decoration: BoxDecoration(
-          border: Border(
-        bottom: BorderSide(width: 1.0, color: new Color(0xffafabab)),
-      )),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text(currTrash.text),
-          SizedBox(width: 100),
-          Text(timeString, style: TextStyle(color: new Color(0xffafabab))),
-          SizedBox(width: 10),
-        ],
+    return GestureDetector(
+      onDoubleTap: () {
+        deleteTile(data.get("docId"));
+      },
+      child: Container(
+        width: tileWidth,
+        height: tileHeight,
+        decoration: BoxDecoration(
+            border: Border(
+          bottom: BorderSide(width: 1.0, color: new Color(0xffafabab)),
+        )),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Container(
+              width: tileWidth * 0.8,
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(30, 0, 0, 0),
+                child: Text(currTrash.text),
+              ),
+            ),
+            Container(
+              width: tileWidth * 0.2,
+              child: Center(
+                child: Text(timeString,
+                    style: TextStyle(color: new Color(0xffafabab))),
+              ),
+            ),
+          ],
+        ),
       ),
     );
+  }
+
+  void deleteTile(String docId) {
+    FirebaseFirestore firestore = FirebaseFirestore.instance;
+    firestore.collection('messeges').doc(docId).delete();
   }
 }
