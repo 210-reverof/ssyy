@@ -38,11 +38,17 @@ class _InputPageState extends State<InputPage> {
               height: 20,
             ),
             ElevatedButton(
-              onPressed: () {
+              onPressed: () async {
                 FirebaseFirestore firestore = FirebaseFirestore.instance;
-                firestore
+                DocumentReference docRef = await firestore
                     .collection('messeges')
                     .add({'date': DateTime.now(), 'text': myController.text});
+
+                firestore
+                    .collection('messeges')
+                    .doc(docRef.id)
+                    .set({'docId': docRef.id}, SetOptions(merge: true));
+
                 myController.clear();
               },
               child: Text('등록하기'),
