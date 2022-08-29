@@ -51,7 +51,10 @@ class _OutputPageState extends State<OutputPage> {
 
   Widget _buildBody(BuildContext context) {
     return StreamBuilder<QuerySnapshot>(
-        stream: FirebaseFirestore.instance.collection('messeges').snapshots(),
+        stream: FirebaseFirestore.instance
+            .collection('messeges')
+            .orderBy('date', descending: true)
+            .snapshots(),
         builder: (context, snapshot) {
           if (!snapshot.hasData) {
             return LinearProgressIndicator();
@@ -62,20 +65,63 @@ class _OutputPageState extends State<OutputPage> {
   }
 
   Widget _buildList(BuildContext context, List<DocumentSnapshot> snapshot) {
+    // return ListView(
+    //   scrollDirection: Axis.vertical,
+    //   shrinkWrap: true,
+    //   children: snapshot.map((data) => _buildListItem(context, data)).toList(),
+    // );
+    List<Widget> tiles = [];
+    for (int i = 0; i < snapshot.length; i++) {
+      tiles.add(_buildListItem(context, snapshot[i], i));
+    }
+
     return ListView(
-      scrollDirection: Axis.vertical,
-      shrinkWrap: true,
-      children: snapshot.map((data) => _buildListItem(context, data)).toList(),
-    );
+        scrollDirection: Axis.vertical, shrinkWrap: true, children: tiles);
   }
 
-  Widget _buildListItem(BuildContext context, DocumentSnapshot data) {
+  Widget _buildListItem(
+      BuildContext context, DocumentSnapshot data, int index) {
     final currTrash = Msg.fromDocumnet(data);
     DateTime currTime = currTrash.date.toDate();
     String timeString = DateFormat('MM-dd kk:mm').format(currTime);
     double tileWidth = MediaQuery.of(context).size.width * 0.8;
     double tileHeight = MediaQuery.of(context).size.height * 0.08;
 
+    if (index == 0) {
+      return GestureDetector(
+        onDoubleTap: () {
+          deleteTile(data.get("docId"));
+        },
+        child: Container(
+          width: tileWidth,
+          height: tileHeight,
+          decoration: BoxDecoration(
+              color: Color.fromARGB(255, 247, 231, 185),
+              border: Border(
+                bottom: BorderSide(width: 1.0, color: new Color(0xffafabab)),
+              )),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Container(
+                width: tileWidth * 0.8,
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(30, 0, 0, 0),
+                  child: Text(currTrash.text),
+                ),
+              ),
+              Container(
+                width: tileWidth * 0.2,
+                child: Center(
+                  child: Text(timeString,
+                      style: TextStyle(color: new Color(0xffafabab))),
+                ),
+              ),
+            ],
+          ),
+        ),
+      );
+    }
     return GestureDetector(
       onDoubleTap: () {
         deleteTile(data.get("docId"));

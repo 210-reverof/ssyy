@@ -42,7 +42,11 @@ class _InputPageState extends State<InputPage> {
                 FirebaseFirestore firestore = FirebaseFirestore.instance;
                 DocumentReference docRef = await firestore
                     .collection('messeges')
-                    .add({'date': DateTime.now(), 'text': myController.text});
+                    .add({
+                  'date': DateTime.now(),
+                  'text': myController.text,
+                  'docId': ""
+                });
 
                 firestore
                     .collection('messeges')
