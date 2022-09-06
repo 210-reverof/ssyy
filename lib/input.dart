@@ -16,22 +16,28 @@ class _InputPageState extends State<InputPage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            const Text(
-              'ssyy',
-            ),
+            const Text('방명록을 자유롭게 적어주세요', style: TextStyle(fontSize: 30)),
             SizedBox(
               height: 20,
             ),
             Container(
-              width: 300,
+              width: 700,
+              height: 100,
               decoration: BoxDecoration(
                   border: Border.all(
                     width: 1,
-                    color: Color.fromARGB(255, 108, 148, 201),
+                    color: Color.fromARGB(255, 167, 167, 167),
                   ),
                   borderRadius: BorderRadius.all(Radius.circular(10))),
-              child: TextField(
-                controller: myController,
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: TextField(
+                    style: TextStyle(fontSize: 20.0),
+                    controller: myController,
+                    decoration: new InputDecoration.collapsed(
+                        hintText: 'ex. 오늘 전시 너무 멋있는 것 같아요!'),
+                    keyboardType: TextInputType.multiline,
+                    maxLines: null),
               ),
             ),
             SizedBox(
@@ -55,7 +61,13 @@ class _InputPageState extends State<InputPage> {
 
                 myController.clear();
               },
-              child: Text('등록하기'),
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text('등록하기', style: TextStyle(fontSize: 20)),
+              ),
+              style: ElevatedButton.styleFrom(
+                primary: Color.fromARGB(255, 70, 70, 70),
+              ),
             )
           ],
         ),
