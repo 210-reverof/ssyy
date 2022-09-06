@@ -93,7 +93,7 @@ class _OutputPageState extends State<OutputPage> {
           decoration: BoxDecoration(
               // color: Color.fromARGB(255, 207, 207, 207),
               image: DecorationImage(
-                  image: AssetImage(' asset/tile_background.png'),
+                  image: AssetImage('asset/tile_background.png'),
                   fit: BoxFit.fill),
               border: Border(
                 bottom: BorderSide(width: 1.0, color: new Color(0xffafabab)),

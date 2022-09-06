@@ -18,11 +18,13 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
+      title: 'The 37th Hannam University Architecture Graduation Exhibition',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const MyHomePage(
+          title:
+              'The 37th Hannam University Architecture Graduation Exhibition'),
     );
   }
 }
@@ -44,13 +46,10 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Container(
-                width: 710,
-                height: 231,
-                decoration: BoxDecoration(
-                    image: DecorationImage(
-                        image: AssetImage('asset/main_banner.png'),
-                        fit: BoxFit.fill))),
+            Text(
+              "스케일 넘어, 스케일 너머",
+              style: TextStyle(fontSize: 20),
+            ),
             SizedBox(
               height: 20,
             ),
