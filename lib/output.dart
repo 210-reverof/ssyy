@@ -65,11 +65,6 @@ class _OutputPageState extends State<OutputPage> {
   }
 
   Widget _buildList(BuildContext context, List<DocumentSnapshot> snapshot) {
-    // return ListView(
-    //   scrollDirection: Axis.vertical,
-    //   shrinkWrap: true,
-    //   children: snapshot.map((data) => _buildListItem(context, data)).toList(),
-    // );
     List<Widget> tiles = [];
     for (int i = 0; i < snapshot.length; i++) {
       tiles.add(_buildListItem(context, snapshot[i], i));
@@ -96,7 +91,10 @@ class _OutputPageState extends State<OutputPage> {
           width: tileWidth,
           height: tileHeight,
           decoration: BoxDecoration(
-              color: Color.fromARGB(255, 247, 231, 185),
+              // color: Color.fromARGB(255, 207, 207, 207),
+              image: DecorationImage(
+                  image: AssetImage(' asset/tile_background.png'),
+                  fit: BoxFit.fill),
               border: Border(
                 bottom: BorderSide(width: 1.0, color: new Color(0xffafabab)),
               )),
