@@ -44,9 +44,13 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            const Text(
-              'ssyy',
-            ),
+            Container(
+                width: 710,
+                height: 231,
+                decoration: BoxDecoration(
+                    image: DecorationImage(
+                        image: AssetImage('asset/main_banner.png'),
+                        fit: BoxFit.fill))),
             SizedBox(
               height: 20,
             ),
@@ -55,7 +59,16 @@ class _MyHomePageState extends State<MyHomePage> {
                 Navigator.push(
                     context, MaterialPageRoute(builder: (_) => InputPage()));
               },
-              child: Text('입력창'),
+              child: Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: Text(
+                  '입력창',
+                  style: TextStyle(fontSize: 20),
+                ),
+              ),
+              style: ElevatedButton.styleFrom(
+                primary: Color.fromARGB(255, 70, 70, 70),
+              ),
             ),
             SizedBox(
               height: 20,
@@ -65,7 +78,16 @@ class _MyHomePageState extends State<MyHomePage> {
                 Navigator.push(
                     context, MaterialPageRoute(builder: (_) => OutputPage()));
               },
-              child: Text('목록'),
+              child: Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: Text(
+                  '방명록',
+                  style: TextStyle(fontSize: 20),
+                ),
+              ),
+              style: ElevatedButton.styleFrom(
+                primary: Color.fromARGB(255, 70, 70, 70),
+              ),
             )
           ],
         ),
