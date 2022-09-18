@@ -105,7 +105,7 @@ class _OutputPageState extends State<OutputPage> {
                 width: tileWidth * 0.8,
                 child: Padding(
                   padding: const EdgeInsets.fromLTRB(30, 0, 0, 0),
-                  child: Text(currTrash.text),
+                  child: Text(currTrash.text, style: TextStyle(fontSize: 30)),
                 ),
               ),
               Container(
